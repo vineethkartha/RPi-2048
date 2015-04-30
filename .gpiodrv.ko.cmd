@@ -1,1 +1,0 @@
-cmd_/media/E/my_works/Rpi/gpiodrv.ko := ld -r -m elf_i386 -T /usr/src/linux-headers-3.13.0-37-generic/scripts/module-common.lds --build-id  -o /media/E/my_works/Rpi/gpiodrv.ko /media/E/my_works/Rpi/gpiodrv.o /media/E/my_works/Rpi/gpiodrv.mod.o
