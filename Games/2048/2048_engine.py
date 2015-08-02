@@ -168,33 +168,45 @@ class Board:
                                                         self.gameBoard[j][i]=0;
                                         
 
+##END of CLASS
 
-
+joystick=open("/dev/hidraw0");
+flag=0;
 g=Board();
 g.printBoard();
 #r=input('Enter');
 while(1):
-        r=input('Enter');
-        if(r==1):
-                g.moveRight();
-                g.merge();
-                g.moveRight();
-                g.spawnBoard();
-        if(r==2):
-                g.moveLeft();
-                g.merge();
-                g.moveLeft();
-                g.spawnBoard();
-        if(r==3):
-                g.moveUp();
-                g.merge();
-                g.moveUp();
-                g.spawnBoard();
-        if(r==4):
-                g.moveDown();
-                g.merge();
-                g.moveDown();
-                g.spawnBoard();
-        if(r==0):
-                break;
-        g.printBoard();
+        r=joystick.read(1);
+        if(flag==0):
+                if(r==str(chr(47))):
+                        g.moveRight();
+                        g.merge();
+                        g.moveRight();
+                        g.spawnBoard();
+                        g.printBoard();
+                        flag=1;
+                if(r==str(chr(143))):
+                        g.moveLeft();
+                        g.merge();
+                        g.moveLeft();
+                        g.spawnBoard();
+                        g.printBoard();
+                        flag=1;
+                if(r==str(chr(31))):
+                        g.moveUp();
+                        g.merge();
+                        g.moveUp();
+                        g.spawnBoard();
+                        g.printBoard();
+                        flag=1;
+                if(r==str(chr(79))):
+                        g.moveDown();
+                        g.merge();
+                        g.moveDown();
+                        g.spawnBoard();
+                        g.printBoard();
+                        flag=1;
+        if(r==str(chr(15))):
+                flag=0;
+        #if(r==0):
+         #       break;
