@@ -76,7 +76,6 @@ class Board:
                                                 del blankList[0];
                                                 blankList.append(j);
 
-
 	def moveDown(self):
 		blankRowIndex=0;
                 blankColIndex=0;
@@ -147,4 +146,6 @@ while(1):
                 g.moveDown();
                 g.merge();
                 g.moveDown();
+        if(r==0):
+                break;
         g.printBoard();
