@@ -4,17 +4,31 @@ class Board:
         rowDirection=0;
         colDirection=0;
         spawnList=[];
+        score=0;
 	def __init__(self):
+                boardList=[];
+                for i in range(0,4):
+                        for j in range(0,4):
+                             boardList.append((i,j));
+                             
+                position=random.randrange(0,len(boardList));
                 probability=random.random();
                 if(probability>0.8):
                         number=4
                 else:
                         number=2;
-                self.gameBoard[0][0]=4;
-                self.gameBoard[0][3]=2;
-                self.gameBoard[0][1]=2;
-                self.gameBoard[1][1]=4;
-                self.gameBoard[1][3]=4;
+                self.gameBoard[boardList[position][0]][boardList[position][1]]=number;
+                del boardList[position];
+
+                position=random.randrange(0,len(boardList));
+                probability=random.random();
+                if(probability>0.8):
+                        number=4
+                else:
+                        number=2;
+                self.gameBoard[boardList[position][0]][boardList[position][1]]=number;
+                del boardList[position];
+                
 		print 'Board initialised'
 
 	def printBoard(self):
@@ -22,7 +36,15 @@ class Board:
 			for j in range(0,4):
 				print self.gameBoard[i][j],'|',
 			print '\n---------------'
+                print 'score:  ',self.score;
 
+        #To calculate the score which the sum of all numbers present on the board.
+        def calculateScore(self):
+                for i in range(0,4):
+                        for j in range(0,4):
+                                self.score=self.score+self.gameBoard[i][j];
+
+                                
 	def spawnBoard(self):
                 self.spawnList=[];
                 for i in range(0,4):
@@ -120,24 +142,29 @@ class Board:
                                         if(j>0):
                                                 if(self.gameBoard[i][j]==self.gameBoard[i+self.rowDirection][j+self.colDirection]):
                                                         self.gameBoard[i+self.rowDirection][j+self.colDirection]=self.gameBoard[i+self.rowDirection][j+self.colDirection]*2;
+                                                        self.score=self.score+ self.gameBoard[i+self.rowDirection][j+self.colDirection]
                                                         self.gameBoard[i][j]=0;
+                                                        
                         elif(self.colDirection==1):
                                 for j in range(3,-1,-1):
                                         if(j<3):
                                                 if(self.gameBoard[i][j]==self.gameBoard[i+self.rowDirection][j+self.colDirection]):
                                                         self.gameBoard[i+self.rowDirection][j+self.colDirection]=self.gameBoard[i+self.rowDirection][j+self.colDirection]*2;
+                                                        self.score=self.score+self.gameBoard[i+self.rowDirection][j+self.colDirection];
                                                         self.gameBoard[i][j]=0;
                         elif(self.rowDirection==-1):
                                 for j in range(0,4):
                                         if(j>0):
                                                 if(self.gameBoard[j][i]==self.gameBoard[j+self.rowDirection][i+self.colDirection]):
                                                         self.gameBoard[j+self.rowDirection][i+self.colDirection]=self.gameBoard[j+self.rowDirection][i+self.colDirection]*2;
+                                                        self.score=self.score+self.gameBoard[j+self.rowDirection][i+self.colDirection];
                                                         self.gameBoard[j][i]=0;
                         elif(self.rowDirection==1):
                                 for j in range(3,-1,-1):
                                         if(j<3):
                                                 if(self.gameBoard[j][i]==self.gameBoard[j+self.rowDirection][i+self.colDirection]):
                                                         self.gameBoard[j+self.rowDirection][i+self.colDirection]=self.gameBoard[j+self.rowDirection][i+self.colDirection]*2;
+                                                        self.score=self.score+self.gameBoard[j+self.rowDirection][i+self.colDirection];
                                                         self.gameBoard[j][i]=0;
                                         
 
