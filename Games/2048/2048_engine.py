@@ -52,13 +52,13 @@ class Board:
                         for j in range(0,4):
                                 if(self.gameBoard[i][j]==0):
                                         self.spawnList.append((i,j));
-
-                position=random.randrange(0,len(self.spawnList));
-		probability=random.random();
-                if(probability<0.8):
-                        self.gameBoard[self.spawnList[position][0]][self.spawnList[position][1]]=2;
-                else:
-                        self.gameBoard[self.spawnList[position][0]][self.spawnList[position][1]]=4;
+                if(len(self.spawnList)>0):
+                        position=random.randrange(0,len(self.spawnList));
+                        probability=random.random();
+                        if(probability<0.8):
+                                self.gameBoard[self.spawnList[position][0]][self.spawnList[position][1]]=2;
+                        else:
+                                self.gameBoard[self.spawnList[position][0]][self.spawnList[position][1]]=4;
 
         def gameOver(self):
                 self.over=1;
@@ -66,6 +66,14 @@ class Board:
                         for j in range(0,4):
                                 if(self.gameBoard[i][j]==0):
                                         self.over=0;
+                                elif(i<3 and j<3):
+                                        if(self.gameBoard[i][j]==self.gameBoard[i][j+1] or self.gameBoard[i][j]==self.gameBoard[i+1][j]):
+                                                self.over=0;
+                                elif(i==3 and j<3):
+                                        if(self.gameBoard[i][j]==self.gameBoard[i][j+1]):
+                                                self.over=0;
+                                        
+                return self.over
 	def moveLeft(self):
                 blankRowIndex=0;
                 blankColIndex=0;
@@ -189,7 +197,9 @@ while(1):
                         g.moveRight();
                         g.merge();
                         g.moveRight();
-                        g.gameOver();
+                        if(g.gameOver()==1):
+                                print "GAME OVER"
+                                break;
                         g.spawnBoard();
                         g.printBoard();
                         flag=1;
@@ -197,7 +207,9 @@ while(1):
                         g.moveLeft();
                         g.merge();
                         g.moveLeft();
-                        g.gameOver();
+                        if(g.gameOver()==1):
+                                print "GAME OVER"
+                                break;
                         g.spawnBoard();
                         g.printBoard();
                         flag=1;
@@ -205,7 +217,9 @@ while(1):
                         g.moveUp();
                         g.merge();
                         g.moveUp();
-                        g.gameOver();
+                        if(g.gameOver()==1):
+                                print "GAME OVER"
+                                break;
                         g.spawnBoard();
                         g.printBoard();
                         flag=1;
@@ -213,7 +227,9 @@ while(1):
                         g.moveDown();
                         g.merge();
                         g.moveDown();
-                        g.gameOver();
+                        if(g.gameOver()==1):
+                                print "GAME OVER"
+                                break;
                         g.spawnBoard();
                         g.printBoard();
                         flag=1;
