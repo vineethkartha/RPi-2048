@@ -5,6 +5,7 @@ class Board:
         colDirection=0;
         spawnList=[];
         score=0;
+        over=0;
 	def __init__(self):
                 boardList=[];
                 for i in range(0,4):
@@ -59,6 +60,12 @@ class Board:
                 else:
                         self.gameBoard[self.spawnList[position][0]][self.spawnList[position][1]]=4;
 
+        def gameOver(self):
+                self.over=1;
+                for i in range(0,4):
+                        for j in range(0,4):
+                                if(self.gameBoard[i][j]==0):
+                                        self.over=0;
 	def moveLeft(self):
                 blankRowIndex=0;
                 blankColIndex=0;
@@ -182,6 +189,7 @@ while(1):
                         g.moveRight();
                         g.merge();
                         g.moveRight();
+                        g.gameOver();
                         g.spawnBoard();
                         g.printBoard();
                         flag=1;
@@ -189,6 +197,7 @@ while(1):
                         g.moveLeft();
                         g.merge();
                         g.moveLeft();
+                        g.gameOver();
                         g.spawnBoard();
                         g.printBoard();
                         flag=1;
@@ -196,6 +205,7 @@ while(1):
                         g.moveUp();
                         g.merge();
                         g.moveUp();
+                        g.gameOver();
                         g.spawnBoard();
                         g.printBoard();
                         flag=1;
@@ -203,10 +213,15 @@ while(1):
                         g.moveDown();
                         g.merge();
                         g.moveDown();
+                        g.gameOver();
                         g.spawnBoard();
                         g.printBoard();
                         flag=1;
         if(r==str(chr(15))):
                 flag=0;
+                
+        if(g.over==1):
+            print "GAME OVER"
+            break;
         #if(r==0):
          #       break;
