@@ -185,7 +185,7 @@ class Board:
 
 ##END of CLASS
 
-joystick=open("/dev/hidraw0");
+joystick=open("/dev/ttys000");
 flag=0;
 g=Board();
 g.printBoard();
