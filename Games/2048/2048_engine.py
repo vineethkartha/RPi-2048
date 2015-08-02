@@ -1,8 +1,15 @@
+import random
 class Board:
 	gameBoard=[[0 for i in range(0,4)]for j in range(0,4)]
         rowDirection=0;
         colDirection=0;
+        spawnList=[];
 	def __init__(self):
+                probability=random.random();
+                if(probability>0.8):
+                        number=4
+                else:
+                        number=2;
                 self.gameBoard[0][0]=4;
                 self.gameBoard[0][3]=2;
                 self.gameBoard[0][1]=2;
@@ -14,10 +21,21 @@ class Board:
 		for i in range(0,4):
 			for j in range(0,4):
 				print self.gameBoard[i][j],'|',
-			print '\n________________'
+			print '\n---------------'
 
-	def updateBoard(self):
-		pass
+	def spawnBoard(self):
+                self.spawnList=[];
+                for i in range(0,4):
+                        for j in range(0,4):
+                                if(self.gameBoard[i][j]==0):
+                                        self.spawnList.append((i,j));
+
+                position=random.randrange(0,len(self.spawnList));
+		probability=random.random();
+                if(probability<0.8):
+                        self.gameBoard[self.spawnList[position][0]][self.spawnList[position][1]]=2;
+                else:
+                        self.gameBoard[self.spawnList[position][0]][self.spawnList[position][1]]=4;
 
 	def moveLeft(self):
                 blankRowIndex=0;
@@ -134,18 +152,22 @@ while(1):
                 g.moveRight();
                 g.merge();
                 g.moveRight();
+                g.spawnBoard();
         if(r==2):
                 g.moveLeft();
                 g.merge();
                 g.moveLeft();
+                g.spawnBoard();
         if(r==3):
                 g.moveUp();
                 g.merge();
                 g.moveUp();
+                g.spawnBoard();
         if(r==4):
                 g.moveDown();
                 g.merge();
                 g.moveDown();
+                g.spawnBoard();
         if(r==0):
                 break;
         g.printBoard();
