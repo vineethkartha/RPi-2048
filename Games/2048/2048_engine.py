@@ -9,6 +9,7 @@ class Board:
     spawnList=[]
     score=0
     over=0
+    moves=0
     black = 0, 0, 0
     board = pygame.image.load("bg.png")
     boardrect = board.get_rect()
@@ -133,6 +134,7 @@ class Board:
         return self.over
 
     def moveLeft(self):
+        self.moves=0
         blankRowIndex=0;
         blankColIndex=0;
         blankList=[];
@@ -150,8 +152,12 @@ class Board:
                         self.gameBoard[i][j]=0;
                         del blankList[0];
                         blankList.append(j);
+                        self.moves=1
+        return self.moves
+
                                         
     def moveRight(self):
+        self.moves=0
         blankRowIndex=0;
         blankColIndex=0;
         blankList=[];
@@ -169,8 +175,11 @@ class Board:
                         self.gameBoard[i][j]=0;
                         del blankList[0];
                         blankList.append(j);
+                        self.moves=1
+        return self.moves
 
     def moveUp(self):
+        self.moves=0
         blankRowIndex=0;
         blankColIndex=0;
         blankList=[];
@@ -188,8 +197,11 @@ class Board:
                         self.gameBoard[j][i]=0;
                         del blankList[0];
                         blankList.append(j);
+                        self.moves=1
+        return self.moves
 
     def moveDown(self):
+        self.moves=0
         blankRowIndex=0;
         blankColIndex=0;
         blankList=[];
@@ -207,21 +219,27 @@ class Board:
                         self.gameBoard[j][i]=0;
                         del blankList[0];
                         blankList.append(j);
+                        self.moves=1
+        return self.moves
 
     def merge(self):
+        self.moves=0
         for i in range(0,4):
             if(self.colDirection==-1):
                 for j in range(0,4):
                     if(j>0):
                         if(self.gameBoard[i][j]==self.gameBoard[i+self.rowDirection][j+self.colDirection]):
+                            if self.gameBoard[i][j] != 0:
+                                self.moves=1
                             self.gameBoard[i+self.rowDirection][j+self.colDirection]=self.gameBoard[i+self.rowDirection][j+self.colDirection]*2;
                             self.score=self.score+ self.gameBoard[i+self.rowDirection][j+self.colDirection]
-                            self.gameBoard[i][j]=0;
-                                                    
+                            self.gameBoard[i][j]=0;                                               
             elif(self.colDirection==1):
                 for j in range(3,-1,-1):
                     if(j<3):
                         if(self.gameBoard[i][j]==self.gameBoard[i+self.rowDirection][j+self.colDirection]):
+                            if self.gameBoard[i][j] != 0:
+                                self.moves=1
                             self.gameBoard[i+self.rowDirection][j+self.colDirection]=self.gameBoard[i+self.rowDirection][j+self.colDirection]*2;
                             self.score=self.score+self.gameBoard[i+self.rowDirection][j+self.colDirection];
                             self.gameBoard[i][j]=0;
@@ -229,6 +247,8 @@ class Board:
                 for j in range(0,4):
                     if(j>0):
                         if(self.gameBoard[j][i]==self.gameBoard[j+self.rowDirection][i+self.colDirection]):
+                            if self.gameBoard[j][i] != 0:
+                                self.moves=1
                             self.gameBoard[j+self.rowDirection][i+self.colDirection]=self.gameBoard[j+self.rowDirection][i+self.colDirection]*2;
                             self.score=self.score+self.gameBoard[j+self.rowDirection][i+self.colDirection];
                             self.gameBoard[j][i]=0;
@@ -236,9 +256,12 @@ class Board:
                 for j in range(3,-1,-1):
                     if(j<3):
                         if(self.gameBoard[j][i]==self.gameBoard[j+self.rowDirection][i+self.colDirection]):
+                            if self.gameBoard[j][i] != 0:
+                                self.moves=1
                             self.gameBoard[j+self.rowDirection][i+self.colDirection]=self.gameBoard[j+self.rowDirection][i+self.colDirection]*2;
                             self.score=self.score+self.gameBoard[j+self.rowDirection][i+self.colDirection];
                             self.gameBoard[j][i]=0;
+        return self.moves
                                         
 
 ##END of CLASS
@@ -257,46 +280,43 @@ while(1):
             sys.exit()
         if(flag==0):
             if(gamepad.get_button(2) == True):
-                g.moveRight();
-                g.merge();
-                g.moveRight();
+                if g.moveRight() + g.merge() > 0:
+                    g.moveRight()
+                    g.spawnBoard();
+                g.printBoard();
                 if(g.gameOver()==1):
                     print "GAME OVER"
                     break;
-                g.spawnBoard();
-                g.printBoard();
                 flag=2;
             if(gamepad.get_button(0) == True):
-                g.moveLeft();
-                g.merge();
-                g.moveLeft();
+                if g.moveLeft() + g.merge() > 0:
+                    g.moveLeft()
+                    g.spawnBoard();
+                g.printBoard();
                 if(g.gameOver()==1):
                     print "GAME OVER"
                     break;
-                g.spawnBoard();
-                g.printBoard();
                 flag=4;
             if(gamepad.get_button(3) == True):
-                g.moveUp();
-                g.merge();
-                g.moveUp();
+                if g.moveUp() + g.merge() > 0:
+                    g.moveUp()
+                    g.spawnBoard();
+                g.printBoard();
                 if(g.gameOver()==1):
                     print "GAME OVER"
                     break;
-                g.spawnBoard();
-                g.printBoard();
                 flag=3;
             if(gamepad.get_button(1) == True):
-                g.moveDown();
-                g.merge();
-                g.moveDown();
+                if g.moveDown() + g.merge() > 0:
+                    g.moveDown()
+                    g.spawnBoard();
+                g.printBoard();
                 if(g.gameOver()==1):
                     print "GAME OVER"
                     break;
-                g.spawnBoard();
-                g.printBoard();
                 flag=1;
-        if((gamepad.get_button(0) == False and flag == 4) or (gamepad.get_button(1) == False and flag == 1) or (gamepad.get_button(2) == False and flag == 2) or (gamepad.get_button(3) == False and flag == 3)):
+        if((gamepad.get_button(0) == False and flag == 4) or (gamepad.get_button(1) == False and flag == 1) 
+            or (gamepad.get_button(2) == False and flag == 2) or (gamepad.get_button(3) == False and flag == 3)):
             flag = 0;
         pygame.display.flip()            
         if(g.over==1):
