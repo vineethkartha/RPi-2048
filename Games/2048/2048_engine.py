@@ -31,8 +31,8 @@ class Board:
     tile_16384 = pygame.image.load("2048_assets/16384.png")
     tile_32768 = pygame.image.load("2048_assets/32768.png")
     tile_65536 = pygame.image.load("2048_assets/65536.png")
-    size = width, height = (820, 470)
-    screen = pygame.display.set_mode((820, 470))
+    size = width, height = (410, 470)
+    screen = pygame.display.set_mode((410, 470))
 
     def __init__(self):
         pygame.init()
