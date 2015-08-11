@@ -142,6 +142,9 @@ class Board:
                 elif(i==3 and j<3):
                     if(self.gameBoard[i][j]==self.gameBoard[i][j+1]):
                         self.over=0
+                elif(j==3 and i<3):
+                    if(self.gameBoard[i][j]==self.gameBoard[i+1][j]):
+                        self.over=0
 
     def moveLeft(self):
         self.moves=0
