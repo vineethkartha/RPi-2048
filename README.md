@@ -1,8 +1,5 @@
-# RaspberryPi
-My projects and Libraries in Raspberry Pi
-
-#Libraries
-  * GPIO - Functions to initialise gpio and to set gpio pins as input and output
+# RPi 2048
+This is my implementation of the 2048 game in Raspberry Pi B+
 
 #Useful Links
  * GPIO Pin image -http://www.element14.com/community/servlet/JiveServlet/previewBody/68203-102-6-294412/GPIO.png
